@@ -44,6 +44,7 @@ Options:
   --route-types             generate type definitions for API routes (default: false)
   --no-client               do not generate an API class
   --js                      generate js api module with declaration file (default: false)
+  --modular                 generate separated files for http client, data contracts, and routes (default: false)
   -h, --help                output usage information
 ```
 
@@ -61,7 +62,11 @@ generateApi({
   name: "MySuperbApi.ts", // name of output typescript file
   url: 'http://api.com/swagger.json', // url where located swagger schema
 })
-  .then(sourceFile => fs.writeFile(path, sourceFile))
+  .then(({ files, configuration }) => {
+    files.forEach(({ content, name }) => {
+      fs.writeFile(path, content);
+    });
+  })
   .catch(e => console.error(e))
 
 // example with local file  
@@ -69,7 +74,11 @@ generateApi({
   name: "ApiModule.ts", // name of output typescript file
   input: resolve(process.cwd(), './foo/swagger.json') // path to swagger schema
 })
-  .then(sourceFile => fs.writeFile(path, sourceFile))
+  .then(({ files, configuration }) => {
+    files.forEach(({ content, name }) => {
+      fs.writeFile(path, content);
+    });
+  })
   .catch(e => console.error(e))
 
 // example with parsed schema  
@@ -92,7 +101,11 @@ generateApi({
     // ...
   }
 })
-  .then(sourceFile => fs.writeFile(path, sourceFile))
+  .then(({ files, configuration }) => {
+    files.forEach(({ content, name }) => {
+      fs.writeFile(path, content);
+    });
+  })
   .catch(e => console.error(e))
 
 ```
