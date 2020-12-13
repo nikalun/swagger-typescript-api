@@ -56,6 +56,7 @@ interface GenerateApiParams {
    */
   toJS?: boolean;
   prepareConfig?: (currentConfiguration: GenerateApiConfiguration) => GenerateApiConfiguration;
+  prettier?: object;
 }
 
 export interface GenerateApiConfiguration {
